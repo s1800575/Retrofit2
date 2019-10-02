@@ -34,6 +34,6 @@ public interface JsonPlaceHolderApi {
     //{id} arvo saadaan muuttujasta int postId, mikä määritellään sitten ohjelmassa ohjelmassa
 
     @GET
-    Call<List<Comment>> getComments(@Url String url);
+    Call<List<com.example.retrofit2.Comment>> getComments(@Url String url);
     //haetaan url perusteella kommentit
 }

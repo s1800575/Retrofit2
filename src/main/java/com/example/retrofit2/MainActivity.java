@@ -1,9 +1,10 @@
 package com.example.retrofit2;
 import androidx.appcompat.app.AppCompatActivity;
+//import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import org.w3c.dom.Comment;
+//import org.w3c.dom.Comment;
 
 import java.util.HashMap;
 import java.util.List;
@@ -80,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
                 .getComments("http://jsonplaceholder.typicode.com/posts/3/comments");
 
         // @GET("posts/{id}/comments") eli tässä haetaan postaukseen 3 liittyvät kommentit
-
         call.enqueue(new Callback<List<Comment>>() {
             @Override
             public void onResponse(Call<List<Comment>> call, Response<List<Comment>> response) {
