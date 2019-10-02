@@ -16,8 +16,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
-
     private TextView textViewResult;
+
     private JsonPlaceHolderApi jsonPlaceHolderApi;
 
     @Override
@@ -34,13 +34,13 @@ public class MainActivity extends AppCompatActivity {
 
         jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
-        getPosts();
-        //getComments();
+        //getPosts();
+        getComments();
     }
 
     private void getPosts() {
         Map<String, String> parameters = new HashMap<>();
-        parameters.put("userId", "6");
+        parameters.put("userId", "1");
         parameters.put("_sort", "id");
         parameters.put("_order", "desc");
 
@@ -75,40 +75,39 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-//    private void getComments() {
-//        Call<List<Comment>> call = jsonPlaceHolderApi.getComments(3);
-//        // @GET("posts/{id}/comments") eli tässä haetaan postaukseen 3 liittyvät kommentit
-//
-//        call.enqueue(new Callback<List<Comment>>() {
-//            @Override
-//            public void onResponse(Call<List<Comment>> call, Response<List<Comment>> response) {
-//
-//                if (!response.isSuccessful()) {
-//                    textViewResult.setText("Code: " + response.code());
-//                    return;
-//                }
-//
-//                List<Comment> comments = response.body();
-//
-//                for (Comment comment : comments) {
-//                    String content = "";
-//
-//                    content += "ID: " + comment.getId() + "\n";
-//                    content += "Post ID: " + comment.getPostId() + "\n";
-//                    content += "Name: " + comment.getName() + "\n";
-//                    content += "Email: " + comment.getEmail() + "\n";
-//                    content += "Text: " + comment.getText() + "\n\n";
-//
-//                    textViewResult.append(content);
-//                }
-//
-//            }
-//
-//
-//            @Override
-//            public void onFailure(Call<List<Comment>> call, Throwable t) {
-//                textViewResult.setText(t.getMessage());
-//            }
-//        });
-//      }
+    private void getComments() {
+        Call<List<Comment>> call = jsonPlaceHolderApi
+                .getComments("http://jsonplaceholder.typicode.com/posts/3/comments");
+
+        // @GET("posts/{id}/comments") eli tässä haetaan postaukseen 3 liittyvät kommentit
+
+        call.enqueue(new Callback<List<Comment>>() {
+            @Override
+            public void onResponse(Call<List<Comment>> call, Response<List<Comment>> response) {
+
+                if (!response.isSuccessful()) {
+                    textViewResult.setText("Code: " + response.code());
+                    return;
+                }
+
+                List<Comment> comments = response.body();
+
+                for (Comment comment : comments) {
+                    String content = "";
+                    content += "ID: " + comment.getId() + "\n";
+                    content += "Post ID: " + comment.getPostId() + "\n";
+                    content += "Name: " + comment.getName() + "\n";
+                    content += "Email: " + comment.getEmail() + "\n";
+                    content += "Text: " + comment.getText() + "\n\n";
+
+                    textViewResult.append(content);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Comment>> call, Throwable t) {
+                textViewResult.setText(t.getMessage());
+            }
+        });
     }
+}
